@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { createDrawerNavigator, createAppContainer } from 'react-navigation';
 import HomeScreen from './screens/HomeScreen';
+import Screen from './screens/Screen';
 import { Container, Content, Header, Left, Body, Right, Icon, List, ListItem } from 'native-base';
 
 export default class App extends React.Component {
@@ -23,10 +24,10 @@ const CustomDrawerContentComponent = (props) => {
       </Header>
       <Content>
 	<FlatList
-	  data = {[ 'Home', 'Shop by category', "Today's deal" ]}  
+	  data = {[ { key :'Home', screen:'HomeScreen'}, {key:'Shop by category', screen:'Screen'}, {key: "Today's deal"} ]}  
 	  renderItem = {({item}) => (
-	    <ListItem noBorder>
-	      <Text>{item}</Text>
+	    <ListItem noBorder onPress={()=> props.navigation.navigate(item.screen)}>
+	      <Text>{item.key}</Text>
 	    </ListItem>
 	  )}
 	/>
@@ -55,7 +56,8 @@ const CustomDrawerContentComponent = (props) => {
 
 const AppDrawerNavigator = new createDrawerNavigator(
 {
-  HomeScreen: { screen : HomeScreen }
+  HomeScreen: { screen : HomeScreen },
+  Screen: { screen : Screen }
 },
 {
   contentComponent : CustomDrawerContentComponent,
